@@ -10,5 +10,5 @@ package MainPackage;
  * @author Germán Andrés L. Urbina Gutiérrez - Ing. mecatrónica
  */
 public class sadfe {
-    
+    //Haciendo comentarios desde eclipse. me cambie para usar LibGDX
 }
