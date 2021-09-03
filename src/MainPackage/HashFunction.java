@@ -20,9 +20,9 @@ public class HashFunction {
 		return ((a*x+b)%p)%m;
 	}
 	
-	public void reHash(int m) {
+	public void reHash(int m, int l) {
 		this.m = m;
-		this.p = Primes.nextPrime(m);
+		this.p = Primes.nextPrime(10^l);
 		this.a = random.nextInt(p)+1; //max+min -> p-1+1 -> p 
 		this.b = random.nextInt(p-1); // max+min -> p-1+0 -> p
 	}
