@@ -9,9 +9,9 @@ public class HashFunction {
 	private int a, b, p,m; // m: tamano del arreglo; a,b : valores de hash ; p: big pryme 
 	private Random random = new Random(); //Generador aleatorio
 	
-	public HashFunction(int m) {
+	public HashFunction(int m, int l) {
 		this.m = m;
-		this.p = Primes.nextPrime(m);
+		this.p = Primes.nextPrime(10^l);
 		this.a = random.nextInt(p)+1; //max+min -> p-1+1 -> p 
 		this.b = random.nextInt(p-1); // max+min -> p-1+0 -> p
 	}
