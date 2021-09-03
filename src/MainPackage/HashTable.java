@@ -1,32 +1,22 @@
 package MainPackage;
 
 import java.util.LinkedList;
-
 import org.apache.commons.math3.primes.Primes;
+
 
 public class HashTable {
 
 	private int nodos=0;
 	private int m = 0;
 	private LinkedList<Car>[] array;
-	private int a;
-	private int b;
-	private int p;
-	
-	
+	private HashFunction hashF;
 
 	public HashTable(int mSize) {
-		this.p= 1;
 		this.m=mSize;
+		this.hashF = new HashFunction(mSize);
 		this.array = new LinkedList[mSize];
 	}
 	
-	public HashTable(int mSize, int LCar) {
-		this.p= Primes.nextPrime(10^LCar);
-		this.m=mSize;
-		this.array = new LinkedList[mSize];
-	}
-
 	public LinkedList[] getArray() {
 		return array;
 	}
@@ -36,7 +26,7 @@ public class HashTable {
 	}
 
 	public boolean find(Car car) {
-		LinkedList<Car> chain = array[hash(car)];
+		LinkedList<Car> chain = array[this.hashF.hash(car.getId())];
 		for (Car carEval : chain) {
 			if (car.equals(carEval)) {
 				return true;
@@ -46,18 +36,21 @@ public class HashTable {
 	}
 
 	public void add(Car car) {
-		LinkedList<Car> chain = array[hash(car)];
+		LinkedList<Car> chain = array[this.hashF.hash(car.getId())];
 		if (chain != null) {
 			for (Car carEval : chain) {
 				if (car.getId()==carEval.getId()) {
 					return;
 				}
 			}
+			chain.add(car);
+			this.nodos++;
 		} else {
-			chain = new LinkedList();
+			LinkedList chainNew = new LinkedList();
+			chainNew.add(car);
+			this.nodos++;
+			array[this.hashF.hash(car.getId())]=chainNew;
 		}
-		chain.add(car);
-		this.nodos++;
 		this.reHash();
 	}
 
@@ -65,7 +58,7 @@ public class HashTable {
 		if (!find(car)) {
 			return;
 		}
-		LinkedList<Car> chain = array[hash(car)];
+		LinkedList<Car> chain = array[this.hashF.hash(car.getId())];
 		chain.remove();
 		this.nodos--;
 	}
@@ -73,32 +66,23 @@ public class HashTable {
 	public void reHash() {
 		double alpha = nodos / m;
 		if (alpha > 0.9) {
-			HashTable nueva = new HashTable(2 * this.m);
-			this.choseNewH();
+			HashTable Tnew = new HashTable(2 * this.m);
+			HashFunction Fnew = new HashFunction(2*this.m);
+			
 			for (LinkedList<Car> chainEval : this.array) {
 				if (chainEval!=null && !chainEval.isEmpty()) {
 					for (Car carEval : chainEval) {
-						nueva.add(carEval);
+						Tnew.add(carEval);
 					}
 				}
 			}
-			this.array = nueva.getArray();
+			this.array = Tnew.getArray();
+			this.hashF = Fnew;
 			System.out.println("ReHash efectivo, nuevo tamaño:" + this.array.length);
 		}
 	}
 
-	public int hash(Car car) {
-		return ((a*car.getId()+b)%p)%m;
-	}
 
-	public int[] choseNewH() {
-		
-		this.a = (int)(Math.random()*(p-1)+1);
-		this.b = (int)(Math.random()*p);
-		int result[] = { a, b };
-		return result;
-	}
-	
 	public void print() {
 		for(int i =0; i<array.length;i++) {
 			LinkedList list = array[i];
