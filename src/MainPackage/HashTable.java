@@ -9,9 +9,10 @@ public class HashTable {
 	private LinkedList[] array;
 	private int a;
 	private int b;
-	
-	public HashTable(int m) {
-		this.array = new LinkedList[m];
+
+	public HashTable(int size) {
+		this.m=size;
+		this.array = new LinkedList[size];
 	}
 
 	public LinkedList[] getArray() {
@@ -24,7 +25,7 @@ public class HashTable {
 
 	public boolean find(Car car) {
 		LinkedList<Car> chain = array[hash(car)];
-		for (Object carEval : chain) {
+		for (Car carEval : chain) {
 			if (car.equals(carEval)) {
 				return true;
 			}
@@ -34,17 +35,21 @@ public class HashTable {
 
 	public void add(Car car) {
 		LinkedList<Car> chain = array[hash(car)];
-		for (Object carEval : chain) {
-			if (car.equals(carEval)) {
-				return;
+		if (chain != null) {
+			for (Car carEval : chain) {
+				if (car.equals(carEval)) {
+					return;
+				}
 			}
+		} else {
+			chain = new LinkedList();
 		}
 		chain.add(car);
 		this.nodos++;
 	}
-	
+
 	public void remove(Car car) {
-		if(!find(car)) {
+		if (!find(car)) {
 			return;
 		}
 		LinkedList<Car> chain = array[hash(car)];
@@ -53,29 +58,30 @@ public class HashTable {
 	}
 
 	public void reHash() {
-		double alpha = nodos/m;
-		if (alpha>0.9) {
-			HashTable nueva = new HashTable(2*this.m);
+		double alpha = nodos / m;
+		if (alpha > 0.9) {
+			HashTable nueva = new HashTable(2 * this.m);
 			this.choseNewH();
-			for(LinkedList<Car> chainEval: this.array) {
-				if(!chainEval.isEmpty()) {
-					for(Car carEval: chainEval) {
+			for (LinkedList<Car> chainEval : this.array) {
+				if (!chainEval.isEmpty()) {
+					for (Car carEval : chainEval) {
 						nueva.add(carEval);
 					}
 				}
 			}
 			this.array = nueva.getArray();
+			System.out.println("ReHash efectivo, nuevo tamaño:" + this.array.length);
 		}
 	}
-	
+
 	public int hash(Car car) {
 		return 1;
 	}
-	
+
 	public int[] choseNewH() {
-		this.a=1;
-		this.b=2;
-		int result[] = {a,b};
+		this.a = 1;
+		this.b = 2;
+		int result[] = { a, b };
 		return result;
 	}
 
