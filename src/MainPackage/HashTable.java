@@ -6,7 +6,7 @@ import org.apache.commons.math3.primes.Primes;
 
 public class HashTable {
 
-	private int nodos;
+	private int nodos=0;
 	private int m = 0;
 	private LinkedList[] array;
 	private int a;
@@ -58,6 +58,7 @@ public class HashTable {
 		}
 		chain.add(car);
 		this.nodos++;
+		this.reHash();
 	}
 
 	public void remove(Car car) {
@@ -75,7 +76,7 @@ public class HashTable {
 			HashTable nueva = new HashTable(2 * this.m);
 			this.choseNewH();
 			for (LinkedList<Car> chainEval : this.array) {
-				if (!chainEval.isEmpty()) {
+				if (chainEval!=null && !chainEval.isEmpty()) {
 					for (Car carEval : chainEval) {
 						nueva.add(carEval);
 					}
