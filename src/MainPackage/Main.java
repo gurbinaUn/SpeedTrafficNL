@@ -6,7 +6,7 @@ public class Main {
 		
 		System.out.println("---------PRUEBA ADD");
 		
-		HashTable ejemplo = new HashTable(5);
+		HashTable ejemplo = new HashTable(5,2);
 		for(int i =0;i<25;i++) {
 			Car nuevo = new Car(i);
 			ejemplo.add(nuevo);

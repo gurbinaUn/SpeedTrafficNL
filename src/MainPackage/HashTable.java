@@ -2,6 +2,8 @@ package MainPackage;
 
 import java.util.LinkedList;
 
+import org.apache.commons.math3.primes.Primes;
+
 public class HashTable {
 
 	private int nodos;
@@ -9,10 +11,20 @@ public class HashTable {
 	private LinkedList[] array;
 	private int a;
 	private int b;
+	private int p;
+	
+	
 
-	public HashTable(int size) {
-		this.m=size;
-		this.array = new LinkedList[size];
+	public HashTable(int mSize) {
+		this.p= 1;
+		this.m=mSize;
+		this.array = new LinkedList[mSize];
+	}
+	
+	public HashTable(int mSize, int LCar) {
+		this.p= Primes.nextPrime(10^LCar);
+		this.m=mSize;
+		this.array = new LinkedList[mSize];
 	}
 
 	public LinkedList[] getArray() {
@@ -37,7 +49,7 @@ public class HashTable {
 		LinkedList<Car> chain = array[hash(car)];
 		if (chain != null) {
 			for (Car carEval : chain) {
-				if (car.equals(carEval)) {
+				if (car.getId()==carEval.getId()) {
 					return;
 				}
 			}
@@ -75,12 +87,13 @@ public class HashTable {
 	}
 
 	public int hash(Car car) {
-		return 1;
+		return ((a*car.getId()+b)%p)%m;
 	}
 
 	public int[] choseNewH() {
-		this.a = 1;
-		this.b = 2;
+		
+		this.a = (int)(Math.random()*(p-1)+1);
+		this.b = (int)(Math.random()*p);
 		int result[] = { a, b };
 		return result;
 	}
