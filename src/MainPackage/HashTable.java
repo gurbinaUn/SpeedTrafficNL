@@ -8,7 +8,7 @@ public class HashTable {
 
 	private int nodos=0;
 	private int m = 0;
-	private LinkedList[] array;
+	private LinkedList<Car>[] array;
 	private int a;
 	private int b;
 	private int p;
@@ -97,6 +97,22 @@ public class HashTable {
 		this.b = (int)(Math.random()*p);
 		int result[] = { a, b };
 		return result;
+	}
+	
+	public void print() {
+		for(int i =0; i<array.length;i++) {
+			LinkedList list = array[i];
+			System.out.print(i+" ");
+			if(list==null) {
+				System.out.println("null");
+			} else {
+				for(Object car: list) {
+					Car carEval = (Car)car;
+					System.out.print(carEval.getId()+" ");
+				}
+				System.out.println();
+			}
+		}
 	}
 
 }

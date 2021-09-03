@@ -13,6 +13,7 @@ public class Main {
 			System.out.println("Carro número " + nuevo.getId()+ " agregado");
 		}
 		System.out.println("Yo ya me voy");
+		ejemplo.print();
 	}
 
 }
