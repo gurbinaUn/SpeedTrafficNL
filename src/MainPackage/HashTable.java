@@ -1,5 +1,6 @@
 package MainPackage;
 
+import java.io.PrintWriter;
 import java.util.LinkedList;
 import org.apache.commons.math3.primes.Primes;
 
@@ -11,6 +12,7 @@ public class HashTable {
 	private LinkedList<Car>[] array;
 	private HashFunction hashF;
 	private int L;
+	private PrintWriter pw;
 
 	public HashTable(int mSize, int lSize) {
 		this.m=mSize;
@@ -20,6 +22,16 @@ public class HashTable {
 	}
 
 	
+	public PrintWriter getPw() {
+		return pw;
+	}
+
+
+	public void setPw(PrintWriter pw) {
+		this.pw = pw;
+	}
+
+
 	public int getNodos() {
 		return nodos;
 	}
@@ -78,7 +90,11 @@ public class HashTable {
 				return true;
 			}
 		}
-		System.out.println((System.currentTimeMillis()-startTime)+" ms");
+		try {
+			this.pw.println("Find: "+(System.currentTimeMillis()-startTime)+" ms");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return false;
 	}
 	
@@ -90,7 +106,11 @@ public class HashTable {
 				return true;
 			}
 		}
-		System.out.println((System.currentTimeMillis()-startTime)+" ms");
+		try {
+			this.pw.println("Find: "+(System.currentTimeMillis()-startTime)+" ms");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return false;
 	}
 
@@ -112,7 +132,11 @@ public class HashTable {
 			array[(int)this.hashF.hash(car.getId())]=chainNew;
 		}
 		this.reHash(Integer.toString(car.getId()).length());
-		System.out.println((System.currentTimeMillis()-startTime)+" ms");
+		try {
+			this.pw.println("Add: "+(System.currentTimeMillis()-startTime)+" ms");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}		
 	}
 
 	public void remove(Car car) {
@@ -144,7 +168,11 @@ public class HashTable {
 			this.hashF = Tnew.getHashF(); 
 			this.L = Tnew.getL();
 		}
-		System.out.println("ReHash "+(System.currentTimeMillis()-startTime)+" ms");
+		try {
+			this.pw.println("ReHash: "+(System.currentTimeMillis()-startTime)+" ms");
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 
