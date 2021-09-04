@@ -71,17 +71,32 @@ public class HashTable {
 
 
 	public boolean find(Car car) {
-		LinkedList<Car> chain = array[this.hashF.hash(car.getId())];
+		long startTime = System.currentTimeMillis();
+		LinkedList<Car> chain = array[(int)this.hashF.hash(car.getId())];
 		for (Car carEval : chain) {
 			if (car.equals(carEval)) {
 				return true;
 			}
 		}
+		System.out.println((System.currentTimeMillis()-startTime)+" ms");
+		return false;
+	}
+	
+	public boolean find(int id) {
+		long startTime = System.currentTimeMillis();
+		LinkedList<Car> chain = array[(int)this.hashF.hash(id)];
+		for (Car carEval : chain) {
+			if (id == carEval.getId()) {
+				return true;
+			}
+		}
+		System.out.println((System.currentTimeMillis()-startTime)+" ms");
 		return false;
 	}
 
 	public void add(Car car) {
-		LinkedList<Car> chain = array[this.hashF.hash(car.getId())];
+		long startTime = System.currentTimeMillis();
+		LinkedList<Car> chain = array[(int)this.hashF.hash(car.getId())];
 		if (chain != null) {
 			for (Car carEval : chain) {
 				if (car.getId()==carEval.getId()) {
@@ -94,21 +109,23 @@ public class HashTable {
 			LinkedList chainNew = new LinkedList();
 			chainNew.add(car);
 			this.nodos++;
-			array[this.hashF.hash(car.getId())]=chainNew;
+			array[(int)this.hashF.hash(car.getId())]=chainNew;
 		}
 		this.reHash(Integer.toString(car.getId()).length());
+		System.out.println((System.currentTimeMillis()-startTime)+" ms");
 	}
 
 	public void remove(Car car) {
 		if (!find(car)) {
 			return;
 		}
-		LinkedList<Car> chain = array[this.hashF.hash(car.getId())];
+		LinkedList<Car> chain = array[(int)this.hashF.hash(car.getId())];
 		chain.remove();
 		this.nodos--;
 	}
 
 	public void reHash(int Lnew) {
+		long startTime = System.currentTimeMillis();
 		float alpha = (float)this.nodos / this.m;
 		if (alpha > 0.9) {
 			
@@ -127,6 +144,7 @@ public class HashTable {
 			this.hashF = Tnew.getHashF(); 
 			this.L = Tnew.getL();
 		}
+		System.out.println("ReHash "+(System.currentTimeMillis()-startTime)+" ms");
 	}
 
 

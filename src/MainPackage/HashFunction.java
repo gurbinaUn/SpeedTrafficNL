@@ -16,13 +16,18 @@ public class HashFunction {
 		this.b = random.nextInt(p-1); // max+min -> p-1+0 -> p
 	}
 	
-	public int hash(int x) {
-		return ((a*x+b)%p)%m;
+	public long hash(int x) {
+		long val = (a*x+b);
+		if(val < 0) {
+			return Math.abs((val%(-1*p))%(-1*m)); 
+		}else {
+			return Math.abs((val%(p))%(m));
+		}	
 	}
 	
 	public void reHash(int m, int l) {
 		this.m = m;
-		this.p = Primes.nextPrime(10^l);
+		this.p = Primes.nextPrime((int)Math.pow(10,l));
 		this.a = random.nextInt(p)+1; //max+min -> p-1+1 -> p 
 		this.b = random.nextInt(p-1); // max+min -> p-1+0 -> p
 	}

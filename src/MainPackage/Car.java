@@ -13,14 +13,14 @@ public class Car {
 	public long getTiempoIn() {
 		return tiempoIn;
 	}
-	public void setTiempoIn(int tiempoIn) {
-		this.tiempoIn = tiempoIn;
+	public void setTiempoIn() {
+		this.tiempoIn = System.currentTimeMillis();;
 	}
 	public long getTiempoOut() {
 		return tiempoOut;
 	}
-	public void setTiempoOut(int tiempoOut) {
-		this.tiempoOut = tiempoOut;
+	public void setTiempoOut() {
+		this.tiempoOut = System.currentTimeMillis();;
 	}
 	public int getId() {
 		return id;
