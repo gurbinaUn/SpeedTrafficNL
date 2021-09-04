@@ -7,23 +7,68 @@ import org.apache.commons.math3.primes.Primes;
 public class HashTable {
 
 	private int nodos=0;
-	private int m = 0;
+	private int m;
 	private LinkedList<Car>[] array;
 	private HashFunction hashF;
+	private int L;
 
-	public HashTable(int mSize) {
+	public HashTable(int mSize, int lSize) {
 		this.m=mSize;
-		this.hashF = new HashFunction(mSize);
+		this.L =lSize;
+		this.hashF = new HashFunction(mSize,lSize);
 		this.array = new LinkedList[mSize];
 	}
+
 	
-	public LinkedList[] getArray() {
+	public int getNodos() {
+		return nodos;
+	}
+
+
+	public void setNodos(int nodos) {
+		this.nodos = nodos;
+	}
+
+
+	public int getM() {
+		return m;
+	}
+
+
+	public void setM(int m) {
+		this.m = m;
+	}
+
+
+	public LinkedList<Car>[] getArray() {
 		return array;
 	}
 
-	public void setArray(LinkedList[] array) {
+
+	public void setArray(LinkedList<Car>[] array) {
 		this.array = array;
 	}
+
+
+	public HashFunction getHashF() {
+		return hashF;
+	}
+
+
+	public void setHashF(HashFunction hashF) {
+		this.hashF = hashF;
+	}
+
+
+	public int getL() {
+		return L;
+	}
+
+
+	public void setL(int l) {
+		L = l;
+	}
+
 
 	public boolean find(Car car) {
 		LinkedList<Car> chain = array[this.hashF.hash(car.getId())];
@@ -51,7 +96,7 @@ public class HashTable {
 			this.nodos++;
 			array[this.hashF.hash(car.getId())]=chainNew;
 		}
-		this.reHash();
+		this.reHash(Integer.toString(car.getId()).length());
 	}
 
 	public void remove(Car car) {
@@ -63,11 +108,11 @@ public class HashTable {
 		this.nodos--;
 	}
 
-	public void reHash() {
-		double alpha = nodos / m;
+	public void reHash(int Lnew) {
+		float alpha = (float)this.nodos / this.m;
 		if (alpha > 0.9) {
-			HashTable Tnew = new HashTable(2 * this.m);
-			HashFunction Fnew = new HashFunction(2*this.m);
+			
+			HashTable Tnew = new HashTable(2 * this.m,Lnew);
 			
 			for (LinkedList<Car> chainEval : this.array) {
 				if (chainEval!=null && !chainEval.isEmpty()) {
@@ -76,9 +121,11 @@ public class HashTable {
 					}
 				}
 			}
+			this.nodos = Tnew.getNodos();
+			this.m = Tnew.getM();
 			this.array = Tnew.getArray();
-			this.hashF = Fnew;
-			System.out.println("ReHash efectivo, nuevo tamaño:" + this.array.length);
+			this.hashF = Tnew.getHashF(); 
+			this.L = Tnew.getL();
 		}
 	}
 

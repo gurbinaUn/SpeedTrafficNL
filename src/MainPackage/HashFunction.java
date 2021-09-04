@@ -11,7 +11,7 @@ public class HashFunction {
 	
 	public HashFunction(int m, int l) {
 		this.m = m;
-		this.p = Primes.nextPrime(10^l);
+		this.p = Primes.nextPrime((int)Math.pow(10,l));
 		this.a = random.nextInt(p)+1; //max+min -> p-1+1 -> p 
 		this.b = random.nextInt(p-1); // max+min -> p-1+0 -> p
 	}
