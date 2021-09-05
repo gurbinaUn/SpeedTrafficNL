@@ -12,10 +12,11 @@ public class Main {
 		Scanner reader  =  new Scanner(System.in);
 		FileWriter fichero = null;
 		PrintWriter pw = null;
-		System.out.println();
+		System.out.println("Cant carros:");
+		int cant =  reader.nextInt();
 		
 		try {
-			fichero =  new FileWriter(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").format(LocalDateTime.now())+".txt");
+			fichero =  new FileWriter("Files/"+DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss").format(LocalDateTime.now())+"_"+cant+".txt");
 			pw =  new PrintWriter(fichero);
 			
 		} catch (Exception e) {
@@ -25,8 +26,7 @@ public class Main {
 		
 		
 		
-		System.out.println("Cant carros:");
-		int cant =  reader.nextInt();
+		
 		
 		long startTime = System.currentTimeMillis();
 		System.out.println("---------PRUEBA ADD");
