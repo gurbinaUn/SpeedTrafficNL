@@ -37,8 +37,10 @@ public class Main {
 			Car nuevo = new Car(i);
 			ejemplo.add(nuevo);
 		}
+		for(int i =0;i<cant;i++) {
+			ejemplo.find(i);
+		}
 		System.out.println("Yo ya me voy");
-		ejemplo.print();
 		try {
 			pw.println("Add media: "+ejemplo.promAdd()+" ms");
 			pw.println("Find media: "+ejemplo.promFind()+" ms");
@@ -48,6 +50,8 @@ public class Main {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}		
+		//ejemplo.print();
+		
 	
 	}
 

@@ -105,13 +105,15 @@ public class HashTable {
 		LinkedList<Car> chain = array[(int)this.hashF.hash(car.getId())];
 		for (Car carEval : chain) {
 			if (car.equals(carEval)) {
+				this.contFind++;
+				this.sumFind+=(System.currentTimeMillis()-startTime);
 				return true;
 			}
 		}
 		
 		
 		this.contFind++;
-		this.sumFind+=(System.currentTimeMillis()-startTime);
+		this.sumFind += (System.currentTimeMillis()-startTime);
 		return false;
 	}
 	
@@ -120,6 +122,8 @@ public class HashTable {
 		LinkedList<Car> chain = array[(int)this.hashF.hash(id)];
 		for (Car carEval : chain) {
 			if (id == carEval.getId()) {
+				this.contFind++;
+				this.sumFind+=(System.currentTimeMillis()-startTime);
 				return true;
 			}
 		}

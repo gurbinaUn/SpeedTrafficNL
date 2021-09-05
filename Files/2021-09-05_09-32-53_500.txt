@@ -1,0 +1,4 @@
+Add media: 0.006 ms
+Find media: 0.002 ms
+Rehash media: 0.004 ms
+Total Time: 14 ms
