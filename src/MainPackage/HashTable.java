@@ -13,6 +13,12 @@ public class HashTable {
 	private HashFunction hashF;
 	private int L;
 	private PrintWriter pw;
+	private int contRehash = 0;
+	private int contFind = 0;
+	private int contAdd = 0;
+	private float sumRehash= 0;
+	private float sumFind = 0;
+	private float sumAdd = 0;
 
 	public HashTable(int mSize, int lSize) {
 		this.m=mSize;
@@ -21,6 +27,18 @@ public class HashTable {
 		this.array = new LinkedList[mSize];
 	}
 
+	
+	public float promRehash() {
+		return sumRehash/contRehash;
+	}
+	
+	public float promAdd() {
+		return sumAdd/contAdd;
+	}
+	
+	public float promFind() {
+		return sumFind/contFind;
+	}
 	
 	public PrintWriter getPw() {
 		return pw;
@@ -90,11 +108,10 @@ public class HashTable {
 				return true;
 			}
 		}
-		try {
-			this.pw.println("Find: "+(System.currentTimeMillis()-startTime)+" ms");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		
+		
+		this.contFind++;
+		this.sumFind+=(System.currentTimeMillis()-startTime);
 		return false;
 	}
 	
@@ -106,11 +123,8 @@ public class HashTable {
 				return true;
 			}
 		}
-		try {
-			this.pw.println("Find: "+(System.currentTimeMillis()-startTime)+" ms");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		this.contFind++;
+		this.sumFind+=(System.currentTimeMillis()-startTime);
 		return false;
 	}
 
@@ -132,11 +146,8 @@ public class HashTable {
 			array[(int)this.hashF.hash(car.getId())]=chainNew;
 		}
 		this.reHash(Integer.toString(car.getId()).length());
-		try {
-			this.pw.println("Add: "+(System.currentTimeMillis()-startTime)+" ms");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}		
+		this.contAdd++;
+		this.sumAdd+=(System.currentTimeMillis()-startTime);	
 	}
 
 	public void remove(Car car) {
@@ -144,7 +155,7 @@ public class HashTable {
 			return;
 		}
 		LinkedList<Car> chain = array[(int)this.hashF.hash(car.getId())];
-		chain.remove();
+		chain.remove(car);
 		this.nodos--;
 	}
 
@@ -168,11 +179,8 @@ public class HashTable {
 			this.hashF = Tnew.getHashF(); 
 			this.L = Tnew.getL();
 		}
-		try {
-			this.pw.println("ReHash: "+(System.currentTimeMillis()-startTime)+" ms");
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		this.contRehash++;
+		this.sumRehash+=(System.currentTimeMillis()-startTime);
 	}
 
 

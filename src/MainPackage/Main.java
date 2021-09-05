@@ -40,6 +40,9 @@ public class Main {
 		System.out.println("Yo ya me voy");
 		ejemplo.print();
 		try {
+			pw.println("Add media: "+ejemplo.promAdd()+" ms");
+			pw.println("Find media: "+ejemplo.promFind()+" ms");
+			pw.println("Rehash media: "+ejemplo.promRehash()+" ms");
 			pw.println("Total Time: "+(System.currentTimeMillis()-startTime)+" ms");
 			fichero.close();
 		} catch (Exception e) {
